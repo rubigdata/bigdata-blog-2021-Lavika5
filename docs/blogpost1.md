@@ -16,4 +16,4 @@ Then I installed nano and ran nano HelloWorld.scala and wrote the following code
 - <a href = "https://github.com/rubigdata/bigdata-blog-2021-Lavika5/blob/master/docs/Screenshot_2021-02-21_10-17-13.png" title="HelloWorld.scala">HelloWorld_image
 
 Then I compiled the file and ran it and then removed the inactive containers:
-- <a href = " https://github.com/rubigdata/bigdata-blog-2021-Lavika5/blob/master/docs/Screenshot_2021-02-21_09-52-18.png" title=scala2.png">scala2_image
+- <a href = " https://github.com/rubigdata/bigdata-blog-2021-Lavika5/blob/master/docs/Screenshot_2021-02-21_09-52-18.png" title="scala2.png">scala2_image
