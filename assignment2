@@ -1,1 +1,8 @@
-hdfs
+1.
+- hdfs dfs-mkdir is used to make a new directory in the container
+- hdfs dfs-put is used to upload a file from the local filesystem to the container 
+- hdfs dfs-get is used to get files from the container onto the local system 
+These commands are used so that we can run hadoop commands on files and the files can be read by hadoop.
+
+2. 
+I used the WordCount.java file to count the total number of words and modified it to use it to count the lines and characters. 
