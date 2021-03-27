@@ -6,5 +6,8 @@ These commands are used so that we can run hadoop commands on files and the file
 
 2. 
 I used the WordCount.java file to count the total number of words and modified it to use it to count the lines and characters. 
-The mapper function maps the given text property and 
+The mapper function maps the given text property and the reducer counts it.
+
+-For counting the number of words I used the following code
+[][https://github.com/rubigdata/hello-hadoop-2021-Lavika5/blob/master/WordCount.java]
 
