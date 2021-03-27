@@ -6,3 +6,7 @@ These commands are used so that we can run hadoop commands on files and the file
 
 2. 
 I used the WordCount.java file to count the total number of words and modified it to use it to count the lines and characters. 
+The mapper function maps the given text property and 
+```java
+public static
+```
