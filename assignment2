@@ -8,6 +8,17 @@ These commands are used so that we can run hadoop commands on files and the file
 I used the WordCount.java file to count the total number of words and modified it to use it to count the lines and characters. 
 The mapper function maps the given text property and the reducer counts it.
 
-For counting the number of words I used the following code
-+ [](https://github.com/rubigdata/hello-hadoop-2021-Lavika5).
+For counting the number of words I used the WordCount.java code.
+The number of words is 966041.
 
+For counting the number of lines I used the LineCount.java code.
+The number of lines is 124797.
+
+For counting the number of characters I used CharacterCount.java code.
+The number of characters is 5562155. 
+
+3.
+I used the code WordTypeCount.java to find the number of times Romeo and Juliet occurs. 
+It is possible to find it by passing over the corpus only once.
+Romeo occurs 296 times.
+Juliet occurs 189 times.
