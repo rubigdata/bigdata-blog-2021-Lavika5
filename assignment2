@@ -10,7 +10,9 @@ The mapper function maps the given text property and the reducer counts it.
 
 For counting the number of words I used the WordCount.java code.
 The number of words is 966041.
-![a link](https://github.com/rubigdata/bigdata-blog-2021-Lavika5/blob/master/LineCount.java).
+```
+hello
+```
 For counting the number of lines I used the LineCount.java code.
 The number of lines is 124797.
 
