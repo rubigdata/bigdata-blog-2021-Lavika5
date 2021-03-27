@@ -9,5 +9,5 @@ I used the WordCount.java file to count the total number of words and modified i
 The mapper function maps the given text property and the reducer counts it.
 
 -For counting the number of words I used the following code
-[GitHub](https://github.com/rubigdata/hello-hadoop-2021-Lavika5/blob/master/WordCount.java)
+[GitHub](https://github.com/rubigdata/hello-hadoop-2021-Lavika5)
 
