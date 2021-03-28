@@ -10,17 +10,70 @@ The mapper function maps the given text property and the reducer counts it.
 
 For counting the number of words I used the WordCount.java code.
 The number of words is 966041.
-```java
-if(i = 1)
-```
+
 For counting the number of lines I used the LineCount.java code.
+
+```
+  public static class TokenizerMapper
+       extends Mapper<Object, Text, Text, IntWritable>{
+
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+
+    public void map(Object key, Text value, Context context
+                    ) throws IOException, InterruptedException {
+        context.write(word, one);
+     }
+  }
+```
 The number of lines is 124797.
 
 For counting the number of characters I used CharacterCount.java code.
+```
+  public static class TokenizerMapper
+       extends Mapper<Object, Text, Text, IntWritable>{
+
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+
+    public void map(Object key, Text value, Context context
+                    ) throws IOException, InterruptedException {
+      StringTokenizer itr = new StringTokenizer(value.toString());
+	String line = value.toString();
+	char[] character = line.toCharArray();
+	for(char c : character) {
+        context.write(word, one);
+      }
+    }
+  }
+```
 The number of characters is 5562155. 
 
 3.
 I used the code WordTypeCount.java to find the number of times Romeo and Juliet occurs. 
+
+``` 
+ public static class TokenizerMapper
+       extends Mapper<Object, Text, Text, IntWritable>{
+
+    private final static IntWritable one = new IntWritable(1);
+    private Text word = new Text();
+
+    public void map(Object key, Text value, Context context
+                    ) throws IOException, InterruptedException {
+      StringTokenizer itr = new StringTokenizer(value.toString());
+      while (itr.hasMoreTokens()) {
+        word.set(itr.nextToken());
+	if (word.toString().replaceAll("\\W","").equals("Romeo")){
+		context.write(new Text("Romeo"), one);
+		}
+	if (word.toString().replaceAll("\\W","").equals("Juliet")){
+		context.write(new Text("Juliet"), one);
+		}
+      }
+    }
+  }
+```
 It is possible to find it by passing over the corpus only once.
 Romeo occurs 296 times.
 Juliet occurs 189 times.
