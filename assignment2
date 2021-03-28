@@ -13,7 +13,7 @@ The number of words is 966041.
 
 For counting the number of lines I used the LineCount.java code.
 
-```
+```java
   public static class TokenizerMapper
        extends Mapper<Object, Text, Text, IntWritable>{
 
@@ -29,7 +29,7 @@ For counting the number of lines I used the LineCount.java code.
 The number of lines is 124797.
 
 For counting the number of characters I used CharacterCount.java code.
-```
+```java
   public static class TokenizerMapper
        extends Mapper<Object, Text, Text, IntWritable>{
 
@@ -52,7 +52,7 @@ The number of characters is 5562155.
 3.
 I used the code WordTypeCount.java to find the number of times Romeo and Juliet occurs. 
 
-``` 
+```java
  public static class TokenizerMapper
        extends Mapper<Object, Text, Text, IntWritable>{
 
