@@ -11,7 +11,7 @@ The mapper function maps the given text property and the reducer counts it.
 For counting the number of words I used the WordCount.java code.
 The number of words is 966041.
 
-For counting the number of lines I used the LineCount.java code.
+For counting the number of lines I used the LineCount.java code. This was the modification in the code:
 
 ```java
      public static class TokenizerMapper
@@ -28,7 +28,7 @@ For counting the number of lines I used the LineCount.java code.
 ```
 The number of lines is 124797.
 
-For counting the number of characters I used CharacterCount.java code.
+For counting the number of characters I used CharacterCount.java code.This was the modification in the code:
 ```java
     public static class TokenizerMapper
        extends Mapper<Object, Text, Text, IntWritable>{
@@ -50,7 +50,7 @@ For counting the number of characters I used CharacterCount.java code.
 The number of characters is 5562155. 
 
 3.
-I used the code WordTypeCount.java to find the number of times Romeo and Juliet occurs. 
+I used the code WordTypeCount.java to find the number of times Romeo and Juliet occurs. This was the modification in the code:
 
 ```java
     public static class TokenizerMapper
