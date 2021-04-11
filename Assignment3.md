@@ -3,5 +3,15 @@ Spark is a distributed processing system which is used for working on big data. 
 There are 2 ways of creating RDDs. In this assignment parallelize is used. This copies the elements of the collection so that they can be computed on in paralell. 
 
 ```
-hello
+println( "Lines:\t", lines.count, "\n" + 
+         "Chars:\t", lines.map(s => s.length).
+                            reduce((v_i, v_j) => v_i + v_j))
 ```
+
+```
+println( "Lines:\t", lines.count, "\n" + 
+         "Chars_longest:\t", lines.map(s => s.length).
+                            reduce((v_i, v_j) => v_i max  v_j))
+```
+
+
