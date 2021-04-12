@@ -1,3 +1,4 @@
+- [Assignment3](docs/Assignment3.md)
 # Sample blog 
 
 This is a sample blog using Markdown. Edit this file in order to create your own content. 
