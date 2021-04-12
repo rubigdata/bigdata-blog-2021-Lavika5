@@ -30,3 +30,24 @@ For each input value "map" only produces one output whereas "flatMap" produces z
 
 We get multiple files because we have not defined the number of partitions for words so Spark automatically divides the result into 2 files - part-00000.crc and part-00001.crc.
  
+When we use
+```
+val words = lines.flatMap(line => line.split(" "))
+              .filter(_ != "")
+              .map(word => (word,1))
+val wc = word.reduceByKey(_ + _)
+wc.filter((_._1 == "Macbeth").collect
+```
+The output shows that Macbeth apears in the text 30 times. Because we are just counting how many times the word "Macbeth" appears in the text.
+But when we use  
+```
+val words = lines.flatMap(line => line.split(" "))
+              .map(w => w.toLowerCase().replaceAll("(^[^a-z]+|[^a+z]+$)", ""))
+              .filter(_ != "")
+              .map(w => (w,1))
+              .reduceByKey(_ + _) 
+```
+The output shows that it appears 285 times. This happens because
+- we have converted all the letters to lower case so any occurences of "macbeth" are counted. 
+- we have replaced all special characters with empty strings so any occurence of "Macbeth" with a special characters like ".", "!"  next to it will also be counted.
+
