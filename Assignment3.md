@@ -1,3 +1,16 @@
+#Assignment 3
+
+# Setup 
+I created a docker in linux to run Spark using 
+```
+docker create --name hey-spark -it -p 8080:8080 -p 9001:9001 -p 4040:4040 rubigdata/course:a3
+```
+Then I ran 
+```
+docker start hey-spark
+```
+After that I opened Zepplin in the browser and imported the notebooks for the assignment from the github repository. 
+
 # Introduction to Spark
 Spark is a distributed processing system which is used for working on big data. It uses in-memory caching and optimized query execution for fast queries on data of any size. Resilient Distributed Datasets are important data structures used in Spark.  RDD is an immutable distributed collection of elements partitioned across the nodes of the cluster that can be operated on in parallel.
 There are 2 ways of creating RDDs. In this assignment parallelize is used. This copies the elements of the collection so that they can be computed on in paralell. 
