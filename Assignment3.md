@@ -100,8 +100,26 @@ res30: String =
 ```
 
 Running it again we get
-```(8) ShuffledRDD[19] at groupByKey at <console>:29 []
+```
+(8) ShuffledRDD[19] at groupByKey at <console>:29 []
  +-(8) MapPartitionsRDD[2] at map at <console>:29 []
     |  ParallelCollectionRDD[1] at parallelize at <console>:29 []
 ```
+This happens because groupByKey() depends on the way that the input is partitioned.
+
+ 
+```
+printf( "Number of partitions: %d\n", rddPGP2Count.partitions.length)
+rddPGP2Count.partitioner
+```
+The output for the above segment is
+```
+Number of partitions: 2
+res18: Option[org.apache.spark.Partitioner] = None
+```
+This is because when an RDD is made using map() the partitioner is not preserved.
+
+The results are different for rrdA and rddB are different because rddA is transformed using map() while rddB is transformed using mapValues(). 
+map() operates on the keys and values while mapValues() only operates on the values. This is the reason that the partitioner is not preserved when we use map() as it operates on the key as well and forgets the partitioner and reverts to the default partitioning. mapValues preserves the partitioner.
+
 
