@@ -88,4 +88,20 @@ rddPairs.partitioner is used to define the key which will be used to divide the 
 ```
 val rddPairsPart2 = rddPairs.partitionBy(new HashPartitioner(2))
 ```
-HashPartitioner is used to define the number of partitions, in this case 2.
+HashPartitioner is used to define the number of partitions.
+In this case there are 2 partitions. 
+
+Then we group the pairs by their keys using the sequence x%100. The output is 
+```
+res30: String =
+(8) ShuffledRDD[18] at groupByKey at <console>:29 []
+ +-(8) MapPartitionsRDD[2] at map at <console>:29 []
+    |  ParallelCollectionRDD[1] at parallelize at <console>:29 []
+```
+
+Running it again we get
+```(8) ShuffledRDD[19] at groupByKey at <console>:29 []
+ +-(8) MapPartitionsRDD[2] at map at <console>:29 []
+    |  ParallelCollectionRDD[1] at parallelize at <console>:29 []
+```
+
