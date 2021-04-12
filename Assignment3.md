@@ -51,3 +51,41 @@ The output shows that it appears 285 times. This happens because
 - we have converted all the letters to lower case so any occurences of "macbeth" are counted. 
 - we have replaced all special characters with empty strings so any occurence of "Macbeth" with a special characters like ".", "!"  next to it will also be counted.
 
+Assignment 3b
+
+I ran  cat /proc/info in the docker shell and got the output of 2 processors. The output of the second one:
+```
+processor       : 1
+vendor_id       : GenuineIntel
+cpu family      : 6
+model           : 142
+model name      : Intel(R) Core(TM) i7-8565U CPU @ 1.80GHz
+stepping        : 11
+cpu MHz         : 1992.004
+cache size      : 8192 KB
+physical id     : 0
+siblings        : 2
+core id         : 1
+cpu cores       : 2
+apicid          : 1
+initial apicid  : 1
+fpu             : yes
+fpu_exception   : yes
+cpuid level     : 22
+wp              : yes
+flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx rdtscp lm constant_tsc rep_good nopl xtopology nonstop_tsc cpuid tsc_known_freq pni pclmulqdq ssse3 cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt aes xsave avx rdrand hypervisor lahf_lm abm 3dnowprefetch invpcid_single fsgsbase avx2 invpcid rdseed clflushopt md_clear flush_l1d arch_capabilities
+bugs            : spectre_v1 spectre_v2 spec_store_bypass mds swapgs itlb_multihit srbds
+bogomips        : 3984.00
+clflush size    : 64
+cache_alignment : 64
+address sizes   : 39 bits physical, 48 bits virtual
+```
+
+The differences between the processors was their core id, apicid, initial apicid.
+
+pairRDD is a transformation that arranges the data into two parts, with a Key as the first part and value as the second part.
+rddPairs.partitioner is used to define the key which will be used to divide the elements. 
+```
+val rddPairsPart2 = rddPairs.partitionBy(new HashPartitioner(2))
+```
+HashPartitioner is used to define the number of partitions, in this case 2.
