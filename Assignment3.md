@@ -1,12 +1,23 @@
 # Introduction to Spark
 Spark is a distributed processing system which is used for working on big data. It uses in-memory caching and optimized query execution for fast queries on data of any size. Resilient Distributed Datasets are important data structures used in Spark.  RDD is an immutable distributed collection of elements partitioned across the nodes of the cluster that can be operated on in parallel.
+There are 2 ways of creating RDDs. In this assignment parallelize is used. This copies the elements of the collection so that they can be computed on in paralell. Spark uses lazy evaluation which means that execution does not start until an action is triggered. This means that the transformations are lazy and when an operation in RDD is called it does not execute immediately. Instead Spark keeps a record of the operations that are called using DAG(explained below). This has some advantages as it reduces the number of pass overs on the data increases speed. 
 
-There are 2 ways of creating RDDs. In this assignment parallelize is used. This copies the elements of the collection so that they can be computed on in paralell. 
+### Advantages of Spark
+- Speed - Spark uses RAM instead of local memory for data storage
+- Dynamic nature - computes in parallel
+- low-latency data processing capability
+- Supports graph analytics and machine learning
+
+### Disadvantages of Spark
+- cannot automatically optimize code 
+- Does not have its own file management system and has to use other platforms like Hadoop
+- Has a large number of small files instead of few large files
+- Does not support multi-user enviornment
 
 ## Assignment 3a
 
 ### Why did Spark fire off eight different tasks?
-When an RDD is created, a Directed Acyclic Graph is built and the graph is split into different tasks which are scheduled to execute at different stages. So specifying 8 partitions  fires off 8 different tasks.
+When an RDD is created, a Directed Acyclic Graph(DAG) is built and the graph is split into different tasks which are scheduled to execute at different stages. So specifying 8 partitions  fires off 8 different tasks.
 
 ### Counting words
 ```
@@ -14,7 +25,7 @@ println( "Lines:\t", lines.count, "\n" +
          "Chars:\t", lines.map(s => s.length).
                             reduce((v_i, v_j) => v_i + v_j))
 ```
-map is used as a transformation operation. It is used to return the same number of elements as input. Then we call the action reduce on the new RDD created using map. Because of lazy evaluation in Spark, the execution starts when an action is triggered.
+map is used as a transformation operation. It is used to return the same number of elements as input. Then we call the action reduce on the new RDD created using map. 
 The output was 
 ```
 (Lines: ,147838,
@@ -32,10 +43,10 @@ The output was
 (Lines: ,147838,
 Chars_longest: ,78)
 ```
-### Why did we use flatMap() instead of map()
+### Why did we use flatMap() instead of map()?
 For each input value "map" only produces one output whereas "flatMap" produces zero or more output values. In this case we are giving the lines as input and want words as ouput. We know that there is more than one word so we need more than one output value for an input value and so we use flatMap. 
 
-### Why are there multiple result files
+### Why are there multiple result files?
 On running 
 ```
 %sh 
@@ -44,15 +55,13 @@ ls -al /opt/hadoop/wc
 The output is
 ```
 total 8992
-drwxr-xr-x 2 hadoop hadoop    4096 Apr 11 22:26 .
-drwx------ 1 hadoop hadoop    4096 Apr 11 22:26 ..
--rw-r--r-- 1 hadoop hadoop       8 Apr 11 22:26 ._SUCCESS.crc
--rw-r--r-- 1 hadoop hadoop   35576 Apr 11 22:26 .part-00000.crc
--rw-r--r-- 1 hadoop hadoop   35668 Apr 11 22:26 .part-00001.crc 
+-rw-r--r-- 1 hadoop hadoop    ._SUCCESS.crc
+-rw-r--r-- 1 hadoop hadoop    .part-00000.crc
+-rw-r--r-- 1 hadoop hadoop    .part-00001.crc 
 ```
 We get multiple files because we have not defined the number of partitions for words so Spark automatically divides the result into 2 files - part-00000.crc and part-00001.crc.
 
-### WHy is the count different?
+### Why is the count different?
 
 When we use
 ```
@@ -106,6 +115,7 @@ address sizes   : 39 bits physical, 48 bits virtual
 ```
 
 The differences between the processors was their core id, apicid, initial apicid.
+
 
 pairRDD is a transformation that arranges the data into two parts, with a Key as the first part and value as the second part.
 rddPairs.partitioner is used to define the key which will be used to divide the elements. 
