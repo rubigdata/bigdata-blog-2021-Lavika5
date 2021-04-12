@@ -1,4 +1,4 @@
-#Assignment 3
+# Assignment 3
 
 # Setup 
 I created a docker in linux to run Spark using 
