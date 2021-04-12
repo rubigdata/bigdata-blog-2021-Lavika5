@@ -1,6 +1,8 @@
 # Introduction to Spark
 Spark is a distributed processing system which is used for working on big data. It uses in-memory caching and optimized query execution for fast queries on data of any size. Resilient Distributed Datasets are important data structures used in Spark.  RDD is an immutable distributed collection of elements partitioned across the nodes of the cluster that can be operated on in parallel.
-There are 2 ways of creating RDDs. In this assignment parallelize is used. This copies the elements of the collection so that they can be computed on in paralell. Spark uses lazy evaluation which means that execution does not start until an action is triggered. This means that the transformations are lazy and when an operation in RDD is called it does not execute immediately. Instead Spark keeps a record of the operations that are called using DAG(explained below). This has some advantages as it reduces the number of pass overs on the data increases speed. 
+There are 2 ways of creating RDDs. In this assignment parallelize is used. This copies the elements of the collection so that they can be computed on in paralell. 
+Spark uses lazy evaluation which means that the transformations are lazy and when an operation in RDD lineage is called it does not execute immediately. Instead Spark keeps a record of the operations that are called using DAG(explained below). This has some advantages as it reduces the number of pass overs on the data increases speed. 
+RDD persistence is an optimization technique that saves the results of the RDD evaluations and intermediate resuts for future use. This reduces overheads in computation. This can be done by using cache() method. This method stores the RDD in memory so that it can be used in parallel computations to increase efficiency. cache memory of Spark is fault tolerant so that if any partition of RDD is lost, it can be recovered by the orignal transformation operation. 
 
 ### Advantages of Spark
 - Speed - Spark uses RAM instead of local memory for data storage
@@ -85,6 +87,10 @@ The output shows that it appears 285 times. This happens because
 - we have replaced all special characters with empty strings so any occurence of "Macbeth" with a special characters like ".", "!"  next to it will also be counted.
 
 ## Assignment 3b
+
+### Partitions
+A partition is a logical chunk of large distributed data set. It can be used to distribute work across clusters, dividing a task into smaller tasks and even in reducing memory requirements for each node.
+When we submit a job into the cluster, each partition is further processes by specific executors. This is done one at a time so time taken is directly proportional to the size and number of partitions. So with more partitions it can take longer to complete the job because even though the size of the partition may reduce the number of partitions will increase, increasing the number of executors needed. But using a smaller number of partitions can be faster because even though the executor will have to  work on more data, the number of executors needed will decrease.
 
 I ran  cat /proc/info in the docker shell and got the output of 2 processors. The output of the second one:
 ```
