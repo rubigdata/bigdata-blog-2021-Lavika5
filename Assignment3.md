@@ -122,4 +122,9 @@ This is because when an RDD is made using map() the partitioner is not preserved
 The results are different for rrdA and rddB are different because rddA is transformed using map() while rddB is transformed using mapValues(). 
 map() operates on the keys and values while mapValues() only operates on the values. This is the reason that the partitioner is not preserved when we use map() as it operates on the key as well and forgets the partitioner and reverts to the default partitioning. mapValues preserves the partitioner.
 
-
+```
+val rddC = rddA.repartition(2)
+val rddD = rddB.coalesce(2)
+```
+The difference between the query plans of rddC and rddD is because repartition() does a full shuffle of the data and divides it equally into the partitions and can be used to increase or decrease the number of partitions. coalesce() does not do a full shuffle and instead uses HashPartitioner to adjust the data into the existing partitions and hence reduces the number of partitions.
+That is the rease that the second quesry plan has one less shuffle phase. 
