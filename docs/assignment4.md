@@ -1,4 +1,4 @@
-In this assignment we analyze data provided by the city of Nijmegen by integrating two data sets - one with streetnames and their quarters and one with public artworks.
+ldksldklskdIn this assignment we analyze data provided by the city of Nijmegen by integrating two data sets - one with streetnames and their quarters and one with public artworks.
 
 ## Data Cleaning
 We begin by using the BAG-file, which contains records of addresses and buildings. 
