@@ -96,3 +96,42 @@ The result for this is:
 
 ## SQL
 
+Using SQL makes working on larger and more complicated queries easier.
+
+We can register the DataFrame as SQL temporary view by using:
+```
+addrDF.createOrReplaceTempView("addresses")
+```
+In SQL to determine the largest quarters we use:
+```
+val qc_2_top = spark.sql("SELECT quarter, count(quarter) AS qc FROM addresses GROUP BY quarter ORDER BY qc DESC LIMIT 10")
+```
+By looking at the query plans of SQL and DataFrame operators, I could see that in the optimized logical plan, there were lesser steps taken in SQL. And in the physical plan, the order of the steps were different but they looked similar.
+
+## Artworks
+
+To use art data we load the file “kunstopstraat-kunstwerk.csv”using:
+```
+val kunst = spark.read
+    .format("csv")
+    .option("header", "true") // Use first line of all files as header
+    .option("inferSchema", "true") // Automatically infer data types
+    .load("file:///opt/hadoop/share/data/kunstopstraat-kunstwerk.csv").cache()
+```
+This file contains the fields: naam, bouwjaar, kunstenaar, locatie, latitude, longitude, omschrijving, eigendom, bron en url.
+
+To get a sample of the data we use:
+``` 
+kunstwerken.sample(true,0.1).show()
+```
+The result of which is
+![image3](image3.png)
+
+When we analyze the sample of the data we can see that all records have a name, but a lot of the other fiels are filled in incorrectly or ‘null’.
+When the ‘bouwjaar’ is not a number then the other fields of that record are often ‘null’. 
+We can  also see that the latitude and longitude are different from the coordinates of the bagdata.
+From the records with bouwjaar below 2000 only one doesn’t have a location. This record can be found using:
+```
+spark.sql("SELECT * FROM kunstxy WHERE locatie IS NULL").show().
+```
+
