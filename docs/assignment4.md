@@ -135,3 +135,32 @@ From the records with bouwjaar below 2000 only one doesn’t have a location. Th
 spark.sql("SELECT * FROM kunstxy WHERE locatie IS NULL").show().
 ```
 
+## Can you explain the various data problems we have encountered when working on this dataset? 
+
+When we look at the art data using describe().
+![image4](image4.png)
+
+- We can see that in the count row all fields have a different count which means that a lot of data is missing.
+- The mean ‘bouwjaar’ which means the 'construction year' is 2044, this would mean that some of the artworks are from the future.
+We analyze the data further using sql queries
+- With this we can also see some problems with the ‘latitude’ and ‘longitude’. Like they are  not always numbers and  when one of them is ‘null’ the other is usually text or an url.
+Using the query
+```
+spark.sql("select * from kunst where bouwjaar > 2020").show(10)
+```
+- We get 5 records that have ‘9999’ as ‘bouwjaar', which does not make sense.
+- We also know from earlier that when ‘bouwjaar’ is ‘null’ all the other fields also give ‘null’.
+
+The missing data can cause some problems such as:
+
+- There are 200 records (so almost 20%) that only have a name and have ‘null’ for all other fields. These can have an impact on the results of the data analysis as these values will not be included in the analysis. This impact can also cause us to miss some significant observation especially if the records with missing values are not random.
+For example if there are some records from a certain location or year have alot of missing data, it would cause us to conclude that there is no art work from that location . However this is actually not the case. This is a fundamental problem and the only way to solve it is to find the missing values and enter them in the data.
+- Fields like ‘bouwjaar’, ‘latitude’ and ‘longitude’ often have values that contain text instead of numbers. When an analysis is done using any of these fields we need to convert the values to integers or floats, which would give errors with text. We need to fix these issues by replacing these text values with the equivalent float or integer values.
+ 
+So to make our analysis easier and more accurate for the future we clean the dataset by using
+```
+val ks = spark.sql("select * from kunst where (latitude is not null and longitude is not null) and bouwjaar '<' 9999").
+              .write.parquet("file:///opt/hadoop/share/data/kos.parquet")
+```
+
+
