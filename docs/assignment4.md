@@ -217,6 +217,7 @@ With the following code we can plot the artworks without quarters on a map
 select *  from kos where naam not in (select naam from kosquarter)
 ```
 The map looks as follows:
+
 ![image8](image8.png)
 
 We can assign more artworks to locations by increasing the range for matching coordinates. However we have to be carfult as a higher value can decrease accuracy because artworks that are close to a border between quarters can be assigned to multiple quarters. To solve this we can assign artworks to the closest address.
