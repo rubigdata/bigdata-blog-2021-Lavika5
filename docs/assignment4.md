@@ -188,5 +188,40 @@ from ( select street, quarter, txyudf(x,y) as latlon from addr where street = "H
 ```
 ![image7](image7.png)
 
+Now we can use these joint datasets to analyze and get more information about Nijmegen.
+We can find out the growth of Nijmegen through the years from the years in which the artworks were created using 
+```
+spark.sql("select distinct quarter, min(jaar) as jaar from kosquarter group by quarter order by jaar").show(100,false)
+```
+The results for this is:
+- Stadscentrum		1554
+- Benedenstad		1618 
+- Bottendaal		1900 
+- Altrade		1904 
+- Hazenkamp		1909
+
+We can see that the in the first years there is mostly art near or in the city centre. But with more time more quarters with art existed.
+
+On further analysis we can see that some quarters of Nijmegen are not in this list. Using
+```
+spark.sql(“select distinct quarter from addresses where quarter not in (select quarter from kosquarter)”)
+```
+we can find the 28 quarters that currently are not in kosquarter. Then we can use 
+```
+spark.sql("select naam from kos where naam not in (select naam from kosquarter)")
+```
+count shows that there are 136 artworks not assigned.
+
+With the following code we can plot the artworks without quarters on a map
+```
+select *  from kos where naam not in (select naam from kosquarter)
+```
+The map looks as follows:
+![image8](image8.png)
+
+We can assign more artworks to locations by increasing the range for matching coordinates. However we have to be carfult as a higher value can decrease accuracy because artworks that are close to a border between quarters can be assigned to multiple quarters. To solve this we can assign artworks to the closest address.
+
+
+
 
 
