@@ -1,3 +1,4 @@
+# Assignment 4
 In this assignment we analyze data provided by the city of Nijmegen by integrating two data sets - one with streetnames and their quarters and one with public artworks.
 
 ## Data Cleaning
@@ -162,5 +163,30 @@ So to make our analysis easier and more accurate for the future we clean the dat
 val ks = spark.sql("select * from kunst where (latitude is not null and longitude is not null) and bouwjaar '<' 9999").
               .write.parquet("file:///opt/hadoop/share/data/kos.parquet")
 ```
+
+## Joining the datasets
+
+To further analyze the data and draw more conclusions, we join the artwork and addresses datasets.
+We will join them using the coordinates, but this has some issues as the BAG data uses the 'national triangle coordinates' while the artworks data uses (lat, lon) coordinates. We solve this problem using the Java library(Coordinate Transformation Suite) that can convert these coordinates.
+
+To join the datasets by selecting the name and year from the artworks and the quarter from addresses for records that have coordinates close to each other and save this as kosquarter. This is done by using:
+```
+create temp view kosquarter as
+select distinct naam, quarter, first(latitude), first(longitude), min(bouwjaar) as jaar from kosxy, addr
+where abs(kosxy.x - addr.x) < 10.0 and abs(kosxy.y - addr.y) < 10.0
+group by naam, quarter
+```
+We can analyze the data as graphs. Below is a pie chart adn bar graph representation of the quarters close to the street 'Berg en Dalseweg'.
+
+![image5](image5.png)
+![image6](image6.png)
+
+We can also plot the data on a map. TO plot the map of the street 'Heyendaalseweg' we use
+```
+select street, quarter, latlon._1 as lat, latlon._2 as lon
+from ( select street, quarter, txyudf(x,y) as latlon from addr where street = "Heyendaalseweg")
+```
+![image7](image7.png)
+
 
 
