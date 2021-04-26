@@ -219,8 +219,15 @@ select *  from kos where naam not in (select naam from kosquarter)
 The map looks as follows:
 
 ![image8](image8.png)
+We can assign more artworks to locations by increasing the range for matching coordinates. We can do this by making the coordinates for the artwork differ less than 10.0 from the coordinates of an address so that the  artwork is assigned to that quarter. When we change 10.0 to 20.0 there are only 110 artworks without quarter, when we increase it to 100.0 only 5. When we inspect the 5 ‘oldest’ quarters for 20.0, we see that it changed compared to with 10.0:
+ 
+- Stadscentrum		1554
+- Benedenstad		1618
+- Galgenveld		1645
+- Bottendaal		1900
+- Hengstdal		1903
 
-We can assign more artworks to locations by increasing the range for matching coordinates. However we have to be carfult as a higher value can decrease accuracy because artworks that are close to a border between quarters can be assigned to multiple quarters. To solve this we can assign artworks to the closest address.
+However we have to be carfult as a higher value can decrease accuracy because artworks that are close to a border between quarters can be assigned to multiple quarters. To solve this we can assign artworks to the closest address.
 
 
 
