@@ -2,3 +2,4 @@
 - [Assignment2](docs/assignment2)
 - [Assignment3](docs/Assignment3.md)
 - [Assignment4](docs/assignment4.md)
+- [Assignment5](docs/assignment5.md)
