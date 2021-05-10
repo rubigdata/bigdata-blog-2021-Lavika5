@@ -83,4 +83,47 @@ The output of using the same regular expression here is:
 
 ## Saving the stream data
 
+We need to save the data from teh stream. To do this we create a folder to save the data. Then we need to read the data and write it to this folder.
+```
+val streamWriterDisk = runes
+  .writeStream
+  .outputMode("append")
+  .option("checkpointLocation", "file:///tmp/checkpoint")
+  .trigger(Trigger.ProcessingTime("2 seconds"))
 
+val stream2disk = streamWriterDisk
+  .start("file:///opt/hadoop/share/runedata")
+```
+Then we need to check if the stream is active for which we use 
+```
+spark.streams.active
+```
+As the program keeps running, it fills up the memeory. To check how much memory is used we can use
+```
+du --si /opt/hadoop/share/runedata
+```
+
+## Working with the collected data
+
+We need to now analyze the collected data. To do this, first we run
+```
+val runes = spark
+  .read
+  .parquet("file:///opt/hadoop/share/runedata/part-*")
+  .createOrReplaceTempView("runes")
+```
+
+We find the average price of the items of different materials grouped by their material and sorted in ascending order of the average price.
+```
+SELECT material, avg(price) FROM runes GROUP BY material ORDER BY avg(price)
+```
+
+![image4](22.png)
+
+We can also analyze this graphically.
+
+![image5](23.png)
+
+It is very clear from the above graph and table that the average price of the items made of dragon material is much higher than the other materials. This is because the max price of dragon material is very high so it has a signiicant increase in the average.
+
+ 
