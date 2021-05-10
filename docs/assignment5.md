@@ -126,4 +126,32 @@ We can also analyze this graphically.
 
 It is very clear from the above graph and table that the average price of the items made of dragon material is much higher than the other materials. This is because the max price of dragon material is very high so it has a signiicant increase in the average.
 
- 
+### How many rune items were sold?
+
+We can use the sql query 
+```
+SELECT COUNT(material) FROM runes WHERE material = "Rune"
+```
+The output of which is
+### 581
+
+### How many of each item type was sold?
+
+We can use the sql query
+```
+SELECT tpe, COUNT(tpe) FROM runes GROUP BY tpe 
+```
+The ouput of which is 
+
+![image6](24.png)
+
+### How much gold was spent buying swords?
+
+To do this I found the sum of the prices of all the items of that contained the word sword in the type.
+```
+SELECT tpe, SUM(price) FROM runes WHERE tpe LIKE '%Sword%' OR tpe LIKE '%sword%' GROUP BY tpe
+```
+The output of which is 
+![image7](25.png)
+
+
